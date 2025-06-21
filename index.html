@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechyByte Blog</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #20232a;
+      color: white;
+      padding: 20px 40px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .main-content {
+      flex: 3;
+      padding-right: 30px;
+    }
+
+    .sidebar {
+      flex: 1;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .post {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    .post h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .ad-spot {
+      border: 2px dashed #999;
+      padding: 10px;
+      height: 250px;
+      text-align: center;
+      position: relative;
+    }
+
+    .ad-spot img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .ad-title {
+      margin-top: 8px;
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    .ad-spot a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>TechyByte Blog</h1>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="post">
+        <h2>Why JavaScript is Still King in 2025</h2>
+        <p>
+          JavaScript continues to dominate web development, with frameworks like React, Vue, and Svelte pushing boundaries...
+        </p>
+      </div>
+      <div class="post">
+        <h2>10 GitHub Repos Every Dev Should Star</h2>
+        <p>
+          From AI tools to productivity hacks, these GitHub repositories are gold for developers looking to level up...
+        </p>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <h3>Sponsored</h3>
+      <div class="ad-spot" id="ad-slot">
+        Loading sponsored content...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Replace with your actual website ID from MongoDB
+    const websiteId = "PUT_YOUR_WEBSITE_ID_HERE";
+
+    fetch(`https://<your-backend-url>/api/ad/${websiteId}`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("ad-slot");
+        container.innerHTML = `
+          <a href="${data.link}" target="_blank">
+            <img src="${data.image}" alt="${data.title}" />
+            <div class="ad-title">${data.title}</div>
+          </a>
+        `;
+      })
+      .catch(err => {
+        console.error("Ad fetch failed", err);
+        document.getElementById("ad-slot").textContent = "No ad available";
+      });
+  </script>
+</body>
+</html>
